@@ -2,8 +2,23 @@ var cartDetails = require('../models/model');
 var productDetails = require('../models/listproductmodel');
 function addToCart(productObj) {
   return new Promise(function(resolve, reject) {
-    var product = new cartDetails(productObj);
-    cartDetails.update({productID:{$eq:productObj.productID}},{$inc:{quantity:1}});
+  
+    cartDetails.find({productID:productObj.productID},(err,result)=>{
+     console.log(result)
+       if(result.length!=0){
+         console.log("update")
+         cartDetails.update({productID:productObj.productID},{quantity:productObj.quantity},(err,result)=>{
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+         })
+       }
+
+else {
+ console.log("cretaed")
+ var product = new cartDetails(productObj);
     product.save((err, result) => {
       if (err) {
         reject(err);
@@ -11,6 +26,8 @@ function addToCart(productObj) {
         resolve(result);
       }
     });
+  }
+  });
   });
 }
 
