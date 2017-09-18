@@ -6,7 +6,7 @@ module.exports = function(req, res) {
     productID: req.body.item.productID,
     name: req.body.item.name,
     price: req.body.item.price,
-    quantity: req.body.item.quantity,
+    quantity: req.body.item.quantity
   };
   var promise = services.addtocart(newproduct);
   promise.then(

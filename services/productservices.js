@@ -2,32 +2,36 @@ var cartDetails = require('../models/model');
 var productDetails = require('../models/listproductmodel');
 function addToCart(productObj) {
   return new Promise(function(resolve, reject) {
-  
-    cartDetails.find({productID:productObj.productID},(err,result)=>{
-     console.log(result)
-       if(result.length!=0){
-         console.log("update")
-         cartDetails.update({productID:productObj.productID},{quantity:productObj.quantity},(err,result)=>{
+    cartDetails.find({productID: productObj.productID}, (err, result) => {
+      console.log(result);
+      if (result.length != 0) {
+        console.log('update');
+        cartDetails.update(
+          {productID: productObj.productID},
+          {quantity: productObj.quantity},
+          (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+      } else {
+        console.log('cretaed');
+        var product = new cartDetails(productObj);
+        product.save((err, result) => {
           if (err) {
             reject(err);
           } else {
             resolve(result);
           }
-         })
-       }
-
-else {
- console.log("cretaed")
- var product = new cartDetails(productObj);
-    product.save((err, result) => {
+        });
+      }
       if (err) {
         reject(err);
-      } else {
-        resolve(result);
       }
     });
-  }
-  });
   });
 }
 
@@ -44,7 +48,7 @@ function findCount() {
   });
 }
 function getProducts(item) {
-  console.log(item);
+  console.log("sent",item);
   return new Promise(function(resolve, reject) {
     productDetails
       .find(
@@ -54,12 +58,12 @@ function getProducts(item) {
           if (err) {
             reject(err);
           } else {
-            console.log('==>', result);
+            //console.log('==>', result);
             resolve(result);
           }
         }
       )
-      .limit(2);
+      .limit(item.limit);
   });
 }
 
