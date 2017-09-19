@@ -15,6 +15,18 @@ function addToCart(productObj) {
             }
           }
         );
+
+        productDetails.update(
+          {productID: productObj.productID},
+          {$inc: {quantity: -1}},
+          (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          }
+        );
       } else {
         console.log('cretaed');
         var product = new cartDetails(productObj);
