@@ -3,9 +3,7 @@ var productDetails = require('../models/listproductmodel');
 function addToCart(productObj) {
   return new Promise(function(resolve, reject) {
     cartDetails.find({productID: productObj.productID}, (err, result) => {
-      console.log(result);
       if (result.length != 0) {
-        console.log('update');
         cartDetails.update(
           {productID: productObj.productID},
           {quantity: productObj.quantity},
@@ -48,7 +46,7 @@ function findCount() {
   });
 }
 function getProducts(item) {
-  console.log("sent",item);
+  console.log('sent', item);
   return new Promise(function(resolve, reject) {
     productDetails
       .find(

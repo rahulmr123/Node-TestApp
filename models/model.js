@@ -4,10 +4,12 @@ var Schema = mongoose.Schema;
 var d = mongoose.connection;
 var product = new Schema(
   {
-    productID: String,
-    name: String,
-    price: Number,
-    quantity: Number,
+    productID: {
+      type:String,
+      required:true},
+    name: {type:String,required:true},
+    price: {type:Number,required:true},
+    quantity: {type:Number,required:true}
   },
   {
     versionKey: false,

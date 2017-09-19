@@ -4,10 +4,18 @@ const bodyParser = require('body-parser');
 const app = express();
 const db = require('./config/db');
 const mongoose = require('mongoose');
-const port = 8080;
+const port = 8000;
 // mongoose.connect(db.url);
 //console.log(db.url)
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 app.get('/', function(req, res) {
   res.send('hello');
 });

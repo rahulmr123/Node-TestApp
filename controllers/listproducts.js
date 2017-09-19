@@ -1,5 +1,6 @@
 var services = require('../services/productservices');
 module.exports = function(req, res) {
+  res.header("Access-Control-Allow-Origin","*")
   var item = {
     min_price: req.query.min_price ? req.query.min_price : null,
     max_price: req.query.max_price ? req.query.max_price : null,
