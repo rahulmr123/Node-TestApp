@@ -2,16 +2,12 @@
 var services = require('../services/productservices');
 
 module.exports = function(req, res) {
-  res.header("Access-Control-Allow-Origin","*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   var newproduct = {
     productID: req.body.item.productID,
     name: req.body.item.name,
     price: req.body.item.price,
     quantity: req.body.item.quantity,
   };
-
- 
 
   var promise = services.addtocart(newproduct);
   promise.then(
@@ -25,9 +21,9 @@ module.exports = function(req, res) {
       return;
     }
   );
-  var a = services.findcount();
+  var promise = services.findcount();
 
-  a.then(
+  promise.then(
     function(result) {
       var response = {
         status: '200',
